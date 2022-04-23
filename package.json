@@ -4,7 +4,8 @@
   "description": "Web App for extractive Text Summarization using Machine Learning",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,8 @@
   },
   "homepage": "https://github.com/Rajat947/Text-Summarizer#readme",
   "dependencies": {
-    "express": "^4.17.3"
+    "ejs": "^3.1.7",
+    "express": "^4.17.3",
+    "morgan": "^1.10.0"
   }
 }
