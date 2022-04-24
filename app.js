@@ -5,6 +5,7 @@ const { urlencoded } = require('body-parser');
 const { title } = require('process');
 const port = 3000;
 const app = express();
+const { spawn } = require('child_process')
 //Request Logger
 app.use(morgan('tiny'));
 //Body-Parser
@@ -20,22 +21,27 @@ app.get('/' , function(req,res){
 
 app.post('/', function(req,res){
     let paragraph = req.body.para;
-    fs.writeFileSync('paragraph.txt', paragraph);
+    let title = req.body.title;
     //Python Magic -> goes here as we have the para here
     //after this magic write the summary into a file (summary.txt)
-    let dummydata = `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ducimus, consequuntur. Tempora commodi porro impedit dicta esse, quidem accusantium cupiditate pariatur eum perferendis, officia quas aspernatur vel, praesentium doloribus natus vero.
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius fugit quidem accusantium sit officia quis ea blanditiis ducimus totam maxime consectetur excepturi nam expedita facilis, vel ipsa quam fuga voluptas?
-    Eius fugit quidem accusantium sit officia quis ea blanditiis ducimus totam maxime consectetur excepturi nam expedita facilis, vel ipsa quam fuga voluptas?Eius fugit quidem accusantium sit officia quis ea blanditiis ducimus totam maxime consectetur excepturi nam expedita facilis, vel ipsa quam fuga voluptas?Eius fugit quidem accusantium sit officia quis ea blanditiis ducimus totam maxime consectetur excepturi nam expedita facilis, vel ipsa quam fuga voluptas?`;
-    fs.writeFileSync('summary.txt', dummydata);
-    
+    const python = spawn('python', ['Final.py',title,paragraph])
+
+    python.stdout.on('data', (data) => {
+        console.log(data.toString())
+    })
+
+    python.on('exit', () => {
+        console.log("Data Processed");
+        res.redirect('summary');
+    })
     //after writing redirect user to summary url
     
-    res.redirect('summary');
+    
     //that's all
     
 });
 app.get('/summary', function(req,res){
-    const data = fs.readFileSync('summary.txt');
+    const data = fs.readFileSync('Text/summary.txt');
 
     res.render('result', {summary : data});
 })
