@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import sys
 import nltk
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.stem.porter import *
@@ -165,7 +166,6 @@ def get_similarity_scores(i, sent_embeddings, sentences_in_text):
     score, sum_score = 0, 0
     dist, sum_dist = 0, 0
     ctr = 0
-
     if len(sentences_in_text[i]) == 0 or len(sentences_in_text) == 0:
         return (np.nan, np.nan, np.nan, np.nan)
     
@@ -368,7 +368,6 @@ def preprocess(paragraph,title):
       title_scores.append(get_title_score(dataset.iloc[i, 0], dataset.iloc[i, 1]))
   dataset['title_feature'] = title_scores
   counts = {'verbs': [], 'adjectives': [], 'nouns': [], 'pronouns': [], 'adverbs': []}
-  print(dataset.shape)
   for i in range(0,dataset.shape[0]):
     pos_tagging(dataset.iloc[i, 1], counts)
   dataset['verbs'] = counts['verbs']
@@ -377,18 +376,10 @@ def preprocess(paragraph,title):
   dataset['pronouns'] = counts['pronouns']
   dataset['adverbs'] = counts['adverbs']
   return dataset
-
 title = sys.argv[1].replace('\n', ' ')
 para = sys.argv[2].replace('\n', ' ')
-
 data = preprocess(para,title)
-
-print(data)
-
 x_test = data.iloc[:,2:].values
-
-print(x_test.shape)
-
 def generate_summaries(df, y_pred):
     current_title = df['title'].iloc[0]
     current_text = ""
@@ -418,6 +409,6 @@ def generate_summaries(df, y_pred):
 y_pred = predict(x_test)
 
 summary = generate_summaries(data,y_pred)
-fs = open("Text/summary.txt", "a")
+fs = open("Text/summary.txt", "w")
 fs.write(summary[0])
 fs.close()
