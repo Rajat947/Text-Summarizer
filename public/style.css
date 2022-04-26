@@ -19,7 +19,7 @@ body{
     position: absolute;
     display: flex;
     background-color: aliceblue;
-    width: 70%;
+    width: 50%;
     align-items: center;
     justify-items: center;
     padding:30px;
@@ -81,4 +81,24 @@ footer{
 }
 .summary{
     font-family: 'Roboto', sans-serif;
+}
+.errormsg{
+    background-color: rgb(182, 47, 47);
+    font-weight: 500;
+    text-align: center;
+    color: azure;
+    padding: 15px;
+    position:relative;
+    animation-name: appear;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@keyframes appear {
+        0% {
+            transform: translateY(-50px);
+        }
+        100% {
+            transform: translateY(0);
+        }  
 }

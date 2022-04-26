@@ -5,7 +5,8 @@ const { urlencoded } = require('body-parser');
 const { title } = require('process');
 const port = 3000;
 const app = express();
-const { spawn } = require('child_process')
+const { spawn } = require('child_process');
+const util = require('./utils/utility');
 //Request Logger
 app.use(morgan('tiny'));
 //Body-Parser
@@ -42,7 +43,6 @@ app.post('/', function(req,res){
 });
 app.get('/summary', function(req,res){
     const data = fs.readFileSync('Text/summary.txt');
-
     res.render('result', {summary : data});
 })
 app.listen(port, (err) => {
