@@ -2,6 +2,7 @@ const submitBtn = document.querySelector('.btn');
 const paraInp = document.querySelector('.para-inp');
 const titleInp = document.querySelector('.para-title-inp');
 const bodyEl = document.body;
+const backdrop = document.querySelector('.backdrop');
 const renderError = function(err){
     const html = `
     <div class="errormsg">${err}</div>
@@ -37,4 +38,11 @@ submitBtn.addEventListener('click', function(e){
         e.preventDefault();
         return;
     }
+    //show backdrop and  show loader ->
+    if(backdrop.classList.contains('hide')){
+        backdrop.classList.remove('hide');
+    }
 });
+bodyEl.addEventListener('load', function(){
+    backdrop.classList.add('hide');
+})

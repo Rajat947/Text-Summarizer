@@ -23,23 +23,15 @@ app.get('/' , function(req,res){
 app.post('/', function(req,res){
     let paragraph = req.body.para;
     let title = req.body.title;
-    //Python Magic -> goes here as we have the para here
-    //after this magic write the summary into a file (summary.txt)
     const python = spawn('python', ['Final.py',title,paragraph])
 
     python.stdout.on('data', (data) => {
         console.log(data.toString())
     })
-
     python.on('exit', () => {
         console.log("Data Processed");
         res.redirect('summary');
     })
-    //after writing redirect user to summary url
-    
-    
-    //that's all
-    
 });
 app.get('/summary', function(req,res){
     const data = fs.readFileSync('Text/summary.txt');
