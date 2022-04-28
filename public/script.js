@@ -14,8 +14,10 @@ const renderError = function(err){
     }, 3000);
 }
 submitBtn.addEventListener('click', function(e){
-    const title = titleInp.value;
-    const para = paraInp.value;
+    let title = titleInp.value;
+    let para = paraInp.value;
+    title = title.trim();
+    para = para.trim();
     const num_words = para.split(' ').length;
     console.log(num_words);
     if(title === "" && para !== ""){
